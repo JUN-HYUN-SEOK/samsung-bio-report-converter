@@ -327,20 +327,6 @@ def main():
             with st.spinner("⚙️ 데이터 변환 중..."):
                 final_df = pd.DataFrame(data)
                 
-                # 특정 컬럼의 앞쪽 0 제거 (숫자로만 이루어진 경우)
-                columns_to_strip_zeros = ['징수형태', '운송형태수단']
-                for col in columns_to_strip_zeros:
-                    if col in final_df.columns:
-                        def strip_leading_zeros(value):
-                            if pd.isna(value) or value == "":
-                                return value
-                            # 문자열로 변환
-                            str_value = str(value).strip()
-                            # 숫자로만 이루어진 경우에만 앞의 0 제거
-                            if str_value.isdigit() and len(str_value) > 1:
-                                return str_value.lstrip('0') or '0'  # 모두 0인 경우 '0' 반환
-                            return str_value
-                        final_df[col] = final_df[col].apply(strip_leading_zeros)
                 
                 # 신고일자별로 정렬 (빠른 날짜가 위로)
                 if '신고일자' in final_df.columns:
