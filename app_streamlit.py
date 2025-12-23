@@ -286,6 +286,16 @@ def main():
             
             # 데이터 미리보기
             st.subheader("2. 데이터 미리보기")
+            
+            # RAW 파일 컬럼명 표시 (디버깅용)
+            with st.expander("🔍 RAW 파일 컬럼명 & 값 확인", expanded=True):
+                st.warning("**문제 진단**: 아래에서 실제 RAW 파일의 컬럼과 값을 확인하세요")
+                keywords = ['징수', '운송', '신청', '정정', '차수']
+                for col in raw_df.columns:
+                    if any(kw in str(col) for kw in keywords):
+                        sample_values = raw_df[col].head(5).tolist()
+                        st.info(f"📌 **{col}**: {sample_values}")
+            
             with st.expander("원본 데이터 확인", expanded=False):
                 st.dataframe(raw_df.head(10), use_container_width=True)
                 st.caption(f"총 {len(raw_df)}행, {len(raw_df.columns)}열")
